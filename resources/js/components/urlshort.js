@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import Dashboard from './modal'
 
 //Handling creating links
 
@@ -34,13 +33,15 @@ class urlshort extends Component {
     axios.post(uri)
     .then((response) => {
 
-        document.getElementById('result').innerHTML="<div class='alert alert-dark' >Your link is <a href="+response.data+">"+response.data+"</a></div>"
+        document.getElementById('result').innerHTML="<div id='s' class='alert alert-dark' >Your link is <a href="+response.data+">"+response.data+"</a></div>"
+        const a=document.getElementById('result')
+
         document.getElementById('error').innerHTML=""
         console.log(response.data)
     })
     .catch(error => {
         document.getElementById('result').innerHTML=""
-        document.getElementById('error').innerHTML="<div class='alert alert-danger'>"+error.response.data.errors['link']+'</div>'
+        document.getElementById('error').innerHTML="<div id='r'class='alert alert-danger'>"+error.response.data.errors['link']+'</div>'
 
     });
 
