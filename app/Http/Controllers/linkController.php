@@ -30,6 +30,7 @@ class linkController extends Controller
      */
      public function store(Request $request)
      {
+         print_r($request->url());
          $isUrlOk=false;
          $li=$request->link;
          $request->validate([               //Validation check if url is correct
@@ -56,7 +57,7 @@ class linkController extends Controller
 
              shortlinks::create($input);
 
-             return response()->json( "http://".$request->getHttpHost().'/'.$input['code']);
+             return response()->json( "http://".$request->getHttpHost().'/public/link/'.$input['code']);
          }
          else{
              $error['link']="Link isn't active!";
@@ -65,5 +66,11 @@ class linkController extends Controller
              return response()->json($response,422);
          }
 
+     }
+     public function show(Request $request, $id)
+     {
+
+         $shortLinks = shortLinks::where('code',$id)->first();
+         return redirect($shortLinks->link);
      }
 }

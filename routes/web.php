@@ -14,7 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });*/
-Route::get('listlink', 'LinkController@index');
+Route::get('listlink', 'LinkController@show');
+Route::get('link/{id}', 'LinkController@show');
 Route::post('generatelink', 'LinkController@store');
 
- Route::view('/', 'app');
+Route::view('/', 'app');
