@@ -9,9 +9,9 @@ use App\shortlinks;
 class linkController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of links as JSON data.
      *
-     * @return \Illuminate\Http\Response
+     * @return $shortLinks
      */
     public function index()
     {
@@ -23,8 +23,8 @@ class linkController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Store a newly created link in database.
+     * if link isn't correct or not available return error
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -32,10 +32,11 @@ class linkController extends Controller
      {
          $isUrlOk=false;
          $li=$request->link;
-         $request->validate([
+         $request->validate([               //Validation check if url is correct
             'link' => 'required|url'
          ]);
-         $ch = curl_init($li);
+
+         $ch = curl_init($li);              //Check is link active
          curl_setopt($ch, CURLOPT_NOBODY, true);
          curl_exec($ch);
          $retcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -47,6 +48,8 @@ class linkController extends Controller
          }
 
          curl_close($ch);
+
+                                            //Response
          if($isUrlOk==true){
              $input['link'] = $request->link;
              $input['code'] = Str::random(6);

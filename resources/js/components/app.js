@@ -6,7 +6,7 @@ import Urllist from './urllist'
 
 
 
-
+//Render form for creating links and list of links
 document.onreadystatechange = function () {
   if (document.readyState === 'complete') {
       var app = document.getElementById("forma");
